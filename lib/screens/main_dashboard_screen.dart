@@ -1,11 +1,15 @@
-// lib/screens/main_dashboard_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_has_app/screens/nutrition_tracker_screen.dart'; // Changed from mindfit_app
-import 'package:smart_has_app/screens/workout_planner_screen.dart'; // Changed from mindfit_app
-import 'package:smart_has_app/screens/chatbot_screen.dart'; // Changed from mindfit_app
-import 'package:smart_has_app/screens/settings_screen.dart'; // Changed from mindfit_app
+import 'package:provider/provider.dart';
+import 'package:smart_has_app/providers/user_provider.dart';
+import 'package:smart_has_app/providers/workout_provider.dart';
+import 'package:smart_has_app/screens/nutrition_tracker_screen.dart';
+import 'package:smart_has_app/screens/workout_planner_screen.dart';
+import 'package:smart_has_app/screens/chatbot_screen.dart';
+import 'package:smart_has_app/screens/settings_screen.dart';
+import 'package:smart_has_app/widgets/compact_map_widget.dart';
 
 class MainDashboardScreen extends StatefulWidget {
   const MainDashboardScreen({super.key});
@@ -15,23 +19,15 @@ class MainDashboardScreen extends StatefulWidget {
 }
 
 class _MainDashboardScreenState extends State<MainDashboardScreen> {
-  // Mock data (from Kotlin project)
-  String currentWeight = "73.0 kg";
-  String weightDiff = "-2.5 kg";
-  Color weightDiffColor = Colors.green;
-  String caloriesConsumed = "1850";
-  String caloriesGoal = "2000";
-  String workoutsCompleted = "12";
-  String streak = "5 dias";
-
+  // Mock data para o gráfico de peso
   List<FlSpot> weightData = [
-    const FlSpot(0, 75.5),
-    const FlSpot(1, 75.0),
-    const FlSpot(2, 74.5),
-    const FlSpot(3, 74.2),
-    const FlSpot(4, 73.8),
-    const FlSpot(5, 73.3),
-    const FlSpot(6, 73.0),
+    const FlSpot(0, 72.0),
+    const FlSpot(1, 71.7),
+    const FlSpot(2, 71.5),
+    const FlSpot(3, 71.2),
+    const FlSpot(4, 70.8),
+    const FlSpot(5, 70.3),
+    const FlSpot(6, 70.0), // Peso atual do usuário
   ];
 
   List<String> getLastSevenDays() {
@@ -52,22 +48,18 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          "Olá, Usuário!",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return Text(
+              "Olá, ${userProvider.userName}!",
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {
-              // Implementar notificações
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -94,7 +86,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                _buildFeatureCard(
+                _buildNavigationCard(
                   context,
                   "Treinos",
                   Icons.fitness_center,
@@ -104,7 +96,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                               const WorkoutPlannerScreen())),
                 ),
                 const SizedBox(width: 16),
-                _buildFeatureCard(
+                _buildNavigationCard(
                   context,
                   "Nutrição",
                   Icons.restaurant,
@@ -118,7 +110,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                _buildFeatureCard(
+                _buildNavigationCard(
                   context,
                   "Assistente",
                   Icons.chat,
@@ -127,150 +119,163 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                           builder: (context) => const ChatbotScreen())),
                 ),
                 const SizedBox(width: 16),
-                _buildFeatureCard(
-                  context,
-                  "Configurações",
-                  Icons.settings,
-                  () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsScreen())),
-                ),
+                _buildNavigationCard(
+                      context,
+                      "Configurações",
+                      Icons.settings,
+                      () => Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (context) => const SettingsScreen()))),
               ],
             ),
             const SizedBox(height: 24),
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Peso Atual",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
+            
+            // Widget de mapa compacto
+            const CompactMapWidget(),
+            const SizedBox(height: 24),
+            
+            Consumer<UserProvider>(
+              builder: (context, userProvider, child) {
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          currentWeight,
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          weightDiff,
+                        const Text(
+                          "Peso Atual",
                           style: TextStyle(
-                              fontSize: 16, color: weightDiffColor),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    SizedBox(
-                      height: 200,
-                      child: LineChart(
-                        LineChartData(
-                          gridData: FlGridData(show: false),
-                          titlesData: FlTitlesData(
-                            show: true,
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                interval: 1,
-                                getTitlesWidget: (value, meta) {
-                                  return SideTitleWidget(
-                                    axisSide: meta.axisSide,
-                                    space: 8,
-                                    child: Text(
-                                      lastSevenDays[value.toInt()],
-                                      style: const TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.black),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            leftTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                interval: 1,
-                                getTitlesWidget: (value, meta) {
-                                  return Text(
-                                    value.toStringAsFixed(0),
-                                    style: const TextStyle(
-                                        fontSize: 10, color: Colors.black),
-                                  );
-                                },
-                              ),
-                            ),
-                            topTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
-                            rightTitles: AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          borderData: FlBorderData(show: false),
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: weightData,
-                              isCurved: true,
-                              color: Colors.blue,
-                              barWidth: 2,
-                              isStrokeCapRound: true,
-                              dotData: FlDotData(show: true),
-                              belowBarData: BarAreaData(show: false),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text(
+                              "${userProvider.currentWeight.toStringAsFixed(1)} kg",
+                              style: const TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(width: 16),
+                            Text(
+                              userProvider.weightDifferenceText,
+                              style: TextStyle(
+                                  fontSize: 16, color: userProvider.weightDifferenceColor),
                             ),
                           ],
-                          minX: 0,
-                          maxX: 6,
-                          minY: 70,
-                          maxY: 76,
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Resumo Diário",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        _buildDailySummaryItem(
-                            "Calorias",
-                            "$caloriesConsumed",
-                            "Meta: $caloriesGoal"),
-                        _buildDailySummaryItem(
-                            "Treinos", workoutsCompleted, "Este mês"),
-                        _buildDailySummaryItem(
-                            "Sequência", streak, "Consecutivos"),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          height: 200,
+                          child: LineChart(
+                            LineChartData(
+                              gridData: FlGridData(show: false),
+                              titlesData: FlTitlesData(
+                                show: true,
+                                bottomTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    interval: 1,
+                                    getTitlesWidget: (value, meta) {
+                                      return Text(
+                                        lastSevenDays[value.toInt()],
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                leftTitles: AxisTitles(
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    interval: 1,
+                                    getTitlesWidget: (value, meta) {
+                                      return Text(
+                                        value.toStringAsFixed(0),
+                                        style: const TextStyle(
+                                            fontSize: 10, color: Colors.black),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                topTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                                rightTitles: AxisTitles(
+                                    sideTitles: SideTitles(showTitles: false)),
+                              ),
+                              borderData: FlBorderData(show: false),
+                              lineBarsData: [
+                                LineChartBarData(
+                                  spots: weightData,
+                                  isCurved: true,
+                                  color: Colors.blue,
+                                  barWidth: 2,
+                                  isStrokeCapRound: true,
+                                  dotData: FlDotData(show: true),
+                                  belowBarData: BarAreaData(show: false),
+                                ),
+                              ],
+                              minX: 0,
+                              maxX: 6,
+                              minY: 65,
+                              maxY: 76,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            Consumer2<UserProvider, WorkoutProvider>(
+              builder: (context, userProvider, workoutProvider, child) {
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Resumo Diário",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            _buildDailySummaryItem(
+                                "Calorias",
+                                "1850",
+                                "Meta: 2000"),
+                            _buildDailySummaryItem(
+                                "Treinos", 
+                                workoutProvider.totalWorkoutsThisMonth.toString(), 
+                                "Este mês"),
+                            _buildDailySummaryItem(
+                                "Sequência", 
+                                "${workoutProvider.currentStreak} dias", 
+                                "Consecutivos"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -278,7 +283,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
     );
   }
 
-  Widget _buildFeatureCard(
+  Widget _buildNavigationCard(
       BuildContext context, String title, IconData icon, VoidCallback onTap) {
     return Expanded(
       child: Card(

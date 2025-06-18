@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_has_app/providers/auth_provider.dart'; // Changed from mindfit_app
+import 'package:smart_has_app/providers/user_provider.dart';
 import 'package:smart_has_app/screens/main_dashboard_screen.dart'; // Changed from mindfit_app
 import 'package:smart_has_app/screens/profile_setup_screen.dart'; // Changed from mindfit_app
 
@@ -84,25 +85,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                            authProvider.login(
+                            final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+                            final success = await authProvider.login(
                               _emailController.text,
                               _passwordController.text,
-                            ).then((success) {
-                              if (success) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Login bem-sucedido!")),
-                                );
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context) => const MainDashboardScreen()),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Erro no login. Verifique suas credenciais.")),
-                                );
-                              }
-                            });
+                            );
+
+                            if (success) {
+                              // Carregue o usuário (use o ID correto, aqui está "1" como exemplo)
+                              await userProvider.loadCurrentUser("1");
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Login bem-sucedido!")),
+                              );
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (context) => const MainDashboardScreen()),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Erro no login. Verifique suas credenciais.")),
+                              );
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF1B5E20),
