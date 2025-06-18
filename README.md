@@ -1,6 +1,6 @@
 # Mindfit
 
-![Logotipo do Mindfit](app/src/main/res/drawable/logo_mindfit.png)
+![Logotipo do Mindfit](main/assets/logo_mindfit.png)
 
 **Mindfit** é um aplicativo Android desenvolvido para promover saúde física, mental e bem-estar, alinhado à visão da Sociedade 5.0. Utilizando inteligência artificial e integração com dispositivos vestíveis, o Mindfit oferece uma experiência personalizada, com foco em atividade física, nutrição e equilíbrio emocional. Esta é a implementação inicial do projeto, desenvolvida como parte da Fase 3 do curso de Sistemas de Informação da FIAP.
 
