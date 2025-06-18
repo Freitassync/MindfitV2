@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "144904912696",
+    "project_id": "mindfit-72a7c",
+    "storage_bucket": "mindfit-72a7c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144904912696:android:61ea2e0f28948305e94bcd",
+        "android_client_info": {
+          "package_name": "com.example.smart_has_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpcxUdTWlImlSYeQgcBChxZAJM2fk33bU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,9 +1,14 @@
-// lib/screens/workout_planner_screen.dart
+
 import 'package:flutter/material.dart';
-import 'package:smart_has_app/screens/main_dashboard_screen.dart'; // Changed from mindfit_app
-import 'package:smart_has_app/screens/nutrition_tracker_screen.dart'; // Changed from mindfit_app
-import 'package:smart_has_app/screens/chatbot_screen.dart'; // Changed from mindfit_app
-import 'package:smart_has_app/screens/settings_screen.dart'; // Changed from mindfit_app
+import 'package:provider/provider.dart';
+import 'package:smart_has_app/providers/user_provider.dart';
+import 'package:smart_has_app/providers/workout_provider.dart';
+import 'package:smart_has_app/screens/main_dashboard_screen.dart';
+import 'package:smart_has_app/screens/nutrition_tracker_screen.dart';
+import 'package:smart_has_app/screens/chatbot_screen.dart';
+import 'package:smart_has_app/screens/settings_screen.dart';
+import 'package:smart_has_app/screens/add_workout_screen.dart';
+import 'package:smart_has_app/widgets/compact_map_widget.dart';
 
 class WorkoutPlannerScreen extends StatelessWidget {
   const WorkoutPlannerScreen({super.key});
@@ -14,22 +19,18 @@ class WorkoutPlannerScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          "Olá, Usuário!",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Consumer<UserProvider>(
+          builder: (context, userProvider, child) {
+            return Text(
+              "Olá, ${userProvider.userName}!",
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.black),
-            onPressed: () {
-              // Implementar notificações
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -81,7 +82,7 @@ class WorkoutPlannerScreen extends StatelessWidget {
                       () => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                               builder: (context) => const ChatbotScreen()))),
-                  _buildNavigationCard(
+                   _buildNavigationCard(
                       context,
                       "Configurações",
                       Icons.settings,
@@ -92,6 +93,7 @@ class WorkoutPlannerScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
+            
             const Text(
               "Recomendados para você",
               style: TextStyle(
@@ -100,61 +102,52 @@ class WorkoutPlannerScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 12),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _buildRecommendedWorkoutCard(
-                    "Treino HIIT 30 min",
-                    "Queima de gordura",
-                    'assets/workout_1.jpg', // Adicione esta imagem
+
+            const SizedBox(height: 24),
+            Consumer<WorkoutProvider>(
+              builder: (context, workoutProvider, child) {
+                return Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Desafio Semanal",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          "Complete 5 treinos esta semana",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        const SizedBox(height: 12),
+                        LinearProgressIndicator(
+                          value: (workoutProvider.currentStreak / 5).clamp(0.0, 1.0),
+                          backgroundColor: Colors.grey[300],
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "${workoutProvider.currentStreak}/5 treinos completos",
+                          style: const TextStyle(color: Colors.black, fontSize: 12),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(width: 16),
-                  _buildRecommendedWorkoutCard(
-                    "Yoga para iniciantes",
-                    "Relaxamento e flexibilidade",
-                    'assets/workout_2.jpg', // Adicione esta imagem
-                  ),
-                ],
-              ),
+                );
+              },
             ),
             const SizedBox(height: 24),
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Desafio Semanal",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      "Complete 5 treinos esta semana",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    const SizedBox(height: 12),
-                    LinearProgressIndicator(
-                      value: 0.60, // 3/5 treinos
-                      backgroundColor: Colors.grey[300],
-                      color: Colors.blue,
-                    ),
-                    const SizedBox(height: 4),
-                    const Text(
-                      "3/5 treinos completos",
-                      style: TextStyle(color: Colors.black, fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+
+            // Widget de mapa compacto
+            const CompactMapWidget(),
             const SizedBox(height: 24),
+
             const Text(
               "Artigos e Dicas",
               style: TextStyle(
@@ -167,20 +160,24 @@ class WorkoutPlannerScreen extends StatelessWidget {
             _buildArticleCard(
               "Como melhorar sua alimentação",
               "Dicas para uma dieta equilibrada",
-              'assets/article_1.jpg', // Adicione esta imagem
+              'assets/article_1.jpg',
             ),
             const SizedBox(height: 12),
             _buildArticleCard(
               "Benefícios do sono para fitness",
               "Como o sono afeta seus resultados",
-              'assets/article_2.jpg', // Adicione esta imagem
+              'assets/article_2.jpg',
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Ação para adicionar exercício
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const AddWorkoutScreen(),
+            ),
+          );
         },
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
@@ -201,12 +198,12 @@ class WorkoutPlannerScreen extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
         child: SizedBox(
-          width: 100,
+          width: 100, // Defina uma largura fixa
           height: 100,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 48, color: Colors.black),
+              Icon(icon, size: 40, color: Colors.black),
               const SizedBox(height: 8),
               Text(
                 title,
@@ -217,63 +214,6 @@ class WorkoutPlannerScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRecommendedWorkoutCard(
-      String title, String subtitle, String imagePath) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: SizedBox(
-        width: 280,
-        height: 160,
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.black.withOpacity(0.2), // Overlay escuro
-              ),
-            ),
-            Positioned(
-              bottom: 16,
-              left: 16,
-              right: 16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ),
     );

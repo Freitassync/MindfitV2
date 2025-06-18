@@ -1,8 +1,24 @@
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- TODO: CONFIGURAÇÃO MANUAL NECESSÁRIA -->
+    <!-- Substitua YOUR_API_KEY pela sua chave real do Google Maps API -->
+    <!-- Obtenha em: https://console.cloud.google.com/apis/credentials -->
+    
+    <!-- Permissões necessárias para localização e mapas -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
     <application
-        android:label="smart_has_app"
+        android:label="MindFit"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAzKMU8H6SJUroFj4ci9_eKBb67Z1qfM6Y" />
+            
         <activity
             android:name=".MainActivity"
             android:exported="true"

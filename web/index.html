@@ -1,6 +1,14 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+  <!--
+    TODO: CONFIGURAÇÃO MANUAL NECESSÁRIA
+    Substitua YOUR_API_KEY pela sua chave real do Google Maps API
+    Obtenha em: https://console.cloud.google.com/apis/credentials
+    Certifique-se de habilitar as APIs: Maps JavaScript API, Places API, Geocoding API
+  -->
+  
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
@@ -18,19 +26,22 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="MindFit - Seu aplicativo de saúde e fitness">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="smart_has_app">
+  <meta name="apple-mobile-web-app-title" content="MindFit">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>smart_has_app</title>
+  <title>MindFit</title>
   <link rel="manifest" href="manifest.json">
+  
+  <!-- Google Maps JavaScript API -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzKMU8H6SJUroFj4ci9_eKBb67Z1qfM6Y&libraries=marker"></script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
