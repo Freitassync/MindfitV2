@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_has_app/providers/user_provider.dart';
@@ -82,7 +81,7 @@ class WorkoutPlannerScreen extends StatelessWidget {
                       () => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                               builder: (context) => const ChatbotScreen()))),
-                   _buildNavigationCard(
+                  _buildNavigationCard(
                       context,
                       "Configurações",
                       Icons.settings,
@@ -93,7 +92,7 @@ class WorkoutPlannerScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             const Text(
               "Recomendados para você",
               style: TextStyle(
@@ -127,14 +126,16 @@ class WorkoutPlannerScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         LinearProgressIndicator(
-                          value: (workoutProvider.currentStreak / 5).clamp(0.0, 1.0),
+                          value: (workoutProvider.currentStreak / 5)
+                              .clamp(0.0, 1.0),
                           backgroundColor: Colors.grey[300],
                           color: Colors.blue,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           "${workoutProvider.currentStreak}/5 treinos completos",
-                          style: const TextStyle(color: Colors.black, fontSize: 12),
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 12),
                         ),
                       ],
                     ),
@@ -228,7 +229,8 @@ class WorkoutPlannerScreen extends StatelessWidget {
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.horizontal(left: Radius.circular(12)),
+            borderRadius:
+                const BorderRadius.horizontal(left: Radius.circular(12)),
             child: Image.asset(
               imagePath,
               width: 100,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_has_app/providers/auth_provider.dart';
@@ -12,13 +11,13 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // TODO: CONFIGURAÇÃO MANUAL NECESSÁRIA
   // Para configurar completamente o Firebase:
   // 1. Substitua os valores em firebase_options.dart pelos seus reais
   // 2. Configure o projeto no Firebase Console
   // 3. Baixe e substitua os arquivos de configuração (google-services.json para Android, GoogleService-Info.plist para iOS)
-  
+
   try {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
@@ -29,7 +28,7 @@ void main() async {
     print('Continuando sem Firebase para demonstração...');
     // Continue sem Firebase para demonstração
   }
-  
+
   runApp(const MyApp());
 }
 
@@ -44,7 +43,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
         ChangeNotifierProvider(create: (_) => WorkoutProvider()),
-        ChangeNotifierProvider(create: (_) => NotificationProvider()..initializeNotifications()),
+        ChangeNotifierProvider(
+            create: (_) => NotificationProvider()..initializeNotifications()),
       ],
       child: MaterialApp(
         title: 'MindFit',

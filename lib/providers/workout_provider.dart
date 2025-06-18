@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Workout {
@@ -67,31 +66,32 @@ class WorkoutProvider with ChangeNotifier {
 
   List<Workout> get workouts => _workouts;
   List<Workout> get completedWorkouts => _completedWorkouts;
-  
+
   int get totalWorkoutsThisMonth => _completedWorkouts
-      .where((w) => w.completedAt != null && 
-                   w.completedAt!.month == DateTime.now().month &&
-                   w.completedAt!.year == DateTime.now().year)
+      .where((w) =>
+          w.completedAt != null &&
+          w.completedAt!.month == DateTime.now().month &&
+          w.completedAt!.year == DateTime.now().year)
       .length;
 
   int get currentStreak {
     if (_completedWorkouts.isEmpty) return 0;
-    
+
     final sortedWorkouts = _completedWorkouts
         .where((w) => w.completedAt != null)
         .toList()
       ..sort((a, b) => b.completedAt!.compareTo(a.completedAt!));
-    
+
     int streak = 0;
     DateTime? lastDate;
-    
+
     for (final workout in sortedWorkouts) {
       final workoutDate = DateTime(
         workout.completedAt!.year,
         workout.completedAt!.month,
         workout.completedAt!.day,
       );
-      
+
       if (lastDate == null) {
         lastDate = workoutDate;
         streak = 1;
@@ -105,7 +105,7 @@ class WorkoutProvider with ChangeNotifier {
         }
       }
     }
-    
+
     return streak;
   }
 
@@ -124,7 +124,8 @@ class WorkoutProvider with ChangeNotifier {
         category: 'HIIT',
         exercises: [
           Exercise(name: 'Burpees', sets: 3, reps: 10, restSeconds: 30),
-          Exercise(name: 'Mountain Climbers', sets: 3, reps: 20, restSeconds: 30),
+          Exercise(
+              name: 'Mountain Climbers', sets: 3, reps: 20, restSeconds: 30),
           Exercise(name: 'Jump Squats', sets: 3, reps: 15, restSeconds: 30),
           Exercise(name: 'High Knees', sets: 3, reps: 30, restSeconds: 30),
         ],
@@ -138,8 +139,10 @@ class WorkoutProvider with ChangeNotifier {
         category: 'Flexibilidade',
         exercises: [
           Exercise(name: 'Saudação ao Sol', sets: 1, reps: 5, restSeconds: 10),
-          Exercise(name: 'Postura do Guerreiro', sets: 1, reps: 1, restSeconds: 30),
-          Exercise(name: 'Postura da Criança', sets: 1, reps: 1, restSeconds: 60),
+          Exercise(
+              name: 'Postura do Guerreiro', sets: 1, reps: 1, restSeconds: 30),
+          Exercise(
+              name: 'Postura da Criança', sets: 1, reps: 1, restSeconds: 60),
           Exercise(name: 'Postura do Cão', sets: 1, reps: 1, restSeconds: 30),
         ],
       ),
@@ -161,9 +164,12 @@ class WorkoutProvider with ChangeNotifier {
 
     // Adicionar alguns treinos completados para demonstração
     _completedWorkouts = [
-      _workouts[0].copyWith(completedAt: DateTime.now().subtract(const Duration(days: 1))),
-      _workouts[1].copyWith(completedAt: DateTime.now().subtract(const Duration(days: 2))),
-      _workouts[0].copyWith(completedAt: DateTime.now().subtract(const Duration(days: 3))),
+      _workouts[0].copyWith(
+          completedAt: DateTime.now().subtract(const Duration(days: 1))),
+      _workouts[1].copyWith(
+          completedAt: DateTime.now().subtract(const Duration(days: 2))),
+      _workouts[0].copyWith(
+          completedAt: DateTime.now().subtract(const Duration(days: 3))),
     ];
 
     notifyListeners();

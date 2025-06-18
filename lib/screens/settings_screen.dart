@@ -18,9 +18,8 @@ class SettingsScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const MainDashboardScreen())),
+              MaterialPageRoute(
+                  builder: (context) => const MainDashboardScreen())),
         ),
         title: Consumer<UserProvider>(
           builder: (context, userProvider, child) {
@@ -109,7 +108,8 @@ class SettingsScreen extends StatelessWidget {
                               onPressed: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Edição de perfil em desenvolvimento'),
+                                    content: Text(
+                                        'Edição de perfil em desenvolvimento'),
                                   ),
                                 );
                               },
@@ -117,7 +117,9 @@ class SettingsScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        if (userProvider.currentUser?.specialConditions.isNotEmpty ?? false) ...[
+                        if (userProvider
+                                .currentUser?.specialConditions.isNotEmpty ??
+                            false) ...[
                           const Text(
                             "Condições Especiais:",
                             style: TextStyle(fontWeight: FontWeight.w600),
@@ -125,12 +127,15 @@ class SettingsScreen extends StatelessWidget {
                           const SizedBox(height: 4),
                           Wrap(
                             spacing: 8,
-                            children: userProvider.currentUser!.specialConditions.map((condition) =>
-                              Chip(
-                                label: Text(condition),
-                                backgroundColor: Colors.blue.shade50,
-                              ),
-                            ).toList(),
+                            children:
+                                userProvider.currentUser!.specialConditions
+                                    .map(
+                                      (condition) => Chip(
+                                        label: Text(condition),
+                                        backgroundColor: Colors.blue.shade50,
+                                      ),
+                                    )
+                                    .toList(),
                           ),
                         ],
                       ],
@@ -249,12 +254,14 @@ class SettingsScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('MindFit - Seu aplicativo de saúde e fitness'),
+                              Text(
+                                  'MindFit - Seu aplicativo de saúde e fitness'),
                               SizedBox(height: 8),
                               Text('Versão: 1.0.0'),
                               Text('Desenvolvido com Flutter'),
                               SizedBox(height: 8),
-                              Text('© 2024 MindFit. Todos os direitos reservados.'),
+                              Text(
+                                  '© 2024 MindFit. Todos os direitos reservados.'),
                             ],
                           ),
                           actions: [
@@ -277,7 +284,8 @@ class SettingsScreen extends StatelessWidget {
                         context: context,
                         builder: (context) => AlertDialog(
                           title: const Text('Confirmar Saída'),
-                          content: const Text('Deseja realmente sair da sua conta?'),
+                          content:
+                              const Text('Deseja realmente sair da sua conta?'),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.pop(context),
@@ -292,7 +300,8 @@ class SettingsScreen extends StatelessWidget {
                                   ),
                                 );
                               },
-                              child: const Text('Sair', style: TextStyle(color: Colors.red)),
+                              child: const Text('Sair',
+                                  style: TextStyle(color: Colors.red)),
                             ),
                           ],
                         ),

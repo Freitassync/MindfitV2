@@ -83,5 +83,4 @@ class DefaultFirebaseOptions {
     authDomain: 'mindfit-72a7c.firebaseapp.com',
     storageBucket: 'mindfit-72a7c.firebasestorage.app',
   );
-
 }

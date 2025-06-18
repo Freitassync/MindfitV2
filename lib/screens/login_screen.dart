@@ -73,12 +73,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextButton(
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Funcionalidade de recuperação de senha ainda não implementada")),
+                              const SnackBar(
+                                  content: Text(
+                                      "Funcionalidade de recuperação de senha ainda não implementada")),
                             );
                           },
                           child: const Text(
                             "Forgot Password?",
-                            style: TextStyle(color: Color(0xFF1B5E20), fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: Color(0xFF1B5E20),
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -86,8 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () async {
-                            final authProvider = Provider.of<AuthProvider>(context, listen: false);
-                            final userProvider = Provider.of<UserProvider>(context, listen: false);
+                            final authProvider = Provider.of<AuthProvider>(
+                                context,
+                                listen: false);
+                            final userProvider = Provider.of<UserProvider>(
+                                context,
+                                listen: false);
 
                             final success = await authProvider.login(
                               _emailController.text,
@@ -99,14 +107,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               await userProvider.loadCurrentUser("1");
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Login bem-sucedido!")),
+                                const SnackBar(
+                                    content: Text("Login bem-sucedido!")),
                               );
                               Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => const MainDashboardScreen()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MainDashboardScreen()),
                               );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Erro no login. Verifique suas credenciais.")),
+                                const SnackBar(
+                                    content: Text(
+                                        "Erro no login. Verifique suas credenciais.")),
                               );
                             }
                           },
@@ -122,7 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: OutlinedButton(
                           onPressed: () {
                             Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const ProfileSetupScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ProfileSetupScreen()),
                             );
                           },
                           style: OutlinedButton.styleFrom(
@@ -141,19 +156,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           IconButton(
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Login com Google ainda não implementado")),
+                                const SnackBar(
+                                    content: Text(
+                                        "Login com Google ainda não implementado")),
                               );
                             },
-                            icon: Image.asset('assets/ic_google.png', width: 48, height: 48), // Adicione este icone
+                            icon: Image.asset('assets/ic_google.png',
+                                width: 48, height: 48), // Adicione este icone
                           ),
                           const SizedBox(width: 16),
                           IconButton(
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text("Login com Facebook ainda não implementado")),
+                                const SnackBar(
+                                    content: Text(
+                                        "Login com Facebook ainda não implementado")),
                               );
                             },
-                            icon: Image.asset('assets/ic_facebook.png', width: 48, height: 48), // Adicione este icone
+                            icon: Image.asset('assets/ic_facebook.png',
+                                width: 48, height: 48), // Adicione este icone
                           ),
                         ],
                       ),

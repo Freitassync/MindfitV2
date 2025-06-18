@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
@@ -90,20 +89,16 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                   context,
                   "Treinos",
                   Icons.fitness_center,
-                  () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const WorkoutPlannerScreen())),
+                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const WorkoutPlannerScreen())),
                 ),
                 const SizedBox(width: 16),
                 _buildNavigationCard(
                   context,
                   "Nutrição",
                   Icons.restaurant,
-                  () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const NutritionTrackerScreen())),
+                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const NutritionTrackerScreen())),
                 ),
               ],
             ),
@@ -114,26 +109,25 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                   context,
                   "Assistente",
                   Icons.chat,
-                  () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) => const ChatbotScreen())),
+                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const ChatbotScreen())),
                 ),
                 const SizedBox(width: 16),
                 _buildNavigationCard(
-                      context,
-                      "Configurações",
-                      Icons.settings,
-                      () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) => const SettingsScreen()))),
+                    context,
+                    "Configurações",
+                    Icons.settings,
+                    () => Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => const SettingsScreen()))),
               ],
             ),
             const SizedBox(height: 24),
-            
+
             // Widget de mapa compacto
             const CompactMapWidget(),
             const SizedBox(height: 24),
-            
+
             Consumer<UserProvider>(
               builder: (context, userProvider, child) {
                 return Card(
@@ -164,7 +158,8 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                             Text(
                               userProvider.weightDifferenceText,
                               style: TextStyle(
-                                  fontSize: 16, color: userProvider.weightDifferenceColor),
+                                  fontSize: 16,
+                                  color: userProvider.weightDifferenceColor),
                             ),
                           ],
                         ),
@@ -258,16 +253,15 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             _buildDailySummaryItem(
-                                "Calorias",
-                                "1850",
-                                "Meta: 2000"),
+                                "Calorias", "1850", "Meta: 2000"),
                             _buildDailySummaryItem(
-                                "Treinos", 
-                                workoutProvider.totalWorkoutsThisMonth.toString(), 
+                                "Treinos",
+                                workoutProvider.totalWorkoutsThisMonth
+                                    .toString(),
                                 "Este mês"),
                             _buildDailySummaryItem(
-                                "Sequência", 
-                                "${workoutProvider.currentStreak} dias", 
+                                "Sequência",
+                                "${workoutProvider.currentStreak} dias",
                                 "Consecutivos"),
                           ],
                         ),
@@ -316,8 +310,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
     );
   }
 
-  Widget _buildDailySummaryItem(
-      String title, String value, String subtitle) {
+  Widget _buildDailySummaryItem(String title, String value, String subtitle) {
     return Column(
       children: [
         Text(

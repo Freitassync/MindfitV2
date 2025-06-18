@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -45,7 +44,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
     });
   }
 
-  Future<void> _searchFood(String query, void Function(void Function()) updateState) async {
+  Future<void> _searchFood(
+      String query, void Function(void Function()) updateState) async {
     if (query.isEmpty) {
       updateState(() {
         _searchResults = [];
@@ -75,7 +75,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
     }
   }
 
-  List<Map<String, dynamic>> removeDuplicatesByName(List<Map<String, dynamic>> list) {
+  List<Map<String, dynamic>> removeDuplicatesByName(
+      List<Map<String, dynamic>> list) {
     final seen = <String>{};
     return list.where((item) {
       final name = item['name']?.toString().toLowerCase() ?? '';
@@ -126,7 +127,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
                 const SizedBox(height: 16),
                 if (_isSearching)
                   const Center(child: CircularProgressIndicator())
-                else if (_searchResults.isEmpty && _searchController.text.isNotEmpty)
+                else if (_searchResults.isEmpty &&
+                    _searchController.text.isNotEmpty)
                   const Text('Nenhum alimento encontrado')
                 else if (_searchResults.isEmpty)
                   Column(
@@ -135,16 +137,19 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
                       const SizedBox(height: 8),
                       Wrap(
                         spacing: 8,
-                        children: _nutritionService.getPopularFoods().map((food) => 
-                          ActionChip(
-                            label: Text(food),
-                            onPressed: () {
-                              _searchController.text = food;
-                              _searchFood(food, setDialogState);
-                              setDialogState(() {});
-                            },
-                          ),
-                        ).toList(),
+                        children: _nutritionService
+                            .getPopularFoods()
+                            .map(
+                              (food) => ActionChip(
+                                label: Text(food),
+                                onPressed: () {
+                                  _searchController.text = food;
+                                  _searchFood(food, setDialogState);
+                                  setDialogState(() {});
+                                },
+                              ),
+                            )
+                            .toList(),
                       ),
                     ],
                   )
@@ -284,7 +289,6 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
               ),
             ),
             const SizedBox(height: 16),
-                        
             Card(
               elevation: 2,
               shape: RoundedRectangleBorder(
@@ -296,8 +300,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
                   children: [
                     const Text(
                       "Calorias Diárias",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     Row(
@@ -309,7 +313,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
                         const SizedBox(width: 16),
                         Expanded(
                           child: LinearProgressIndicator(
-                            value: (_dailyTotals['calories']! / 2000).clamp(0.0, 1.0),
+                            value: (_dailyTotals['calories']! / 2000)
+                                .clamp(0.0, 1.0),
                             backgroundColor: Colors.grey[300],
                             color: Colors.green,
                           ),
@@ -332,9 +337,14 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMacroNutrientCard("Proteínas", "${_dailyTotals['protein']!.toInt()}g", Icons.fitness_center),
-                _buildMacroNutrientCard("Carboidratos", "${_dailyTotals['carbs']!.toInt()}g", Icons.fastfood),
-                _buildMacroNutrientCard("Gorduras", "${_dailyTotals['fat']!.toInt()}g", Icons.local_pizza),
+                _buildMacroNutrientCard(
+                    "Proteínas",
+                    "${_dailyTotals['protein']!.toInt()}g",
+                    Icons.fitness_center),
+                _buildMacroNutrientCard("Carboidratos",
+                    "${_dailyTotals['carbs']!.toInt()}g", Icons.fastfood),
+                _buildMacroNutrientCard("Gorduras",
+                    "${_dailyTotals['fat']!.toInt()}g", Icons.local_pizza),
               ],
             ),
             const SizedBox(height: 16),
@@ -365,7 +375,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
                               Text('P: ${meal['protein']}g'),
                               const SizedBox(width: 8),
                               IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
                                   setState(() {
                                     _meals.removeAt(index);
@@ -392,7 +403,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
     );
   }
 
-  Widget _buildNavigationCard(BuildContext context, String title, IconData icon, VoidCallback onTap) {
+  Widget _buildNavigationCard(
+      BuildContext context, String title, IconData icon, VoidCallback onTap) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(
@@ -428,8 +440,7 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
     return Expanded(
       child: Card(
         elevation: 2,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -443,7 +454,8 @@ class _NutritionTrackerScreenState extends State<NutritionTrackerScreen> {
               ),
               Text(
                 value,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ],
           ),

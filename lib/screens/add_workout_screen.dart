@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_has_app/providers/workout_provider.dart';
@@ -15,7 +14,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _durationController = TextEditingController();
-  
+
   String _selectedDifficulty = 'Iniciante';
   String _selectedCategory = 'Cardio';
   List<Exercise> _exercises = [];
@@ -77,14 +76,14 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
       );
 
       context.read<WorkoutProvider>().addWorkout(workout);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Treino criado com sucesso!'),
           backgroundColor: Colors.green,
         ),
       );
-      
+
       Navigator.of(context).pop();
     } else if (_exercises.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -240,7 +239,7 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              
+
               // Exercícios
               Card(
                 elevation: 2,
@@ -332,7 +331,8 @@ class _AddWorkoutScreenState extends State<AddWorkoutScreen> {
                                       onPressed: () => _editExercise(index),
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.delete, color: Colors.red),
+                                      icon: const Icon(Icons.delete,
+                                          color: Colors.red),
                                       onPressed: () => _removeExercise(index),
                                     ),
                                   ],
@@ -378,10 +378,14 @@ class _ExerciseDialogState extends State<_ExerciseDialog> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.exercise?.name ?? '');
-    _setsController = TextEditingController(text: widget.exercise?.sets.toString() ?? '');
-    _repsController = TextEditingController(text: widget.exercise?.reps.toString() ?? '');
-    _restController = TextEditingController(text: widget.exercise?.restSeconds?.toString() ?? '');
-    _notesController = TextEditingController(text: widget.exercise?.notes ?? '');
+    _setsController =
+        TextEditingController(text: widget.exercise?.sets.toString() ?? '');
+    _repsController =
+        TextEditingController(text: widget.exercise?.reps.toString() ?? '');
+    _restController = TextEditingController(
+        text: widget.exercise?.restSeconds?.toString() ?? '');
+    _notesController =
+        TextEditingController(text: widget.exercise?.notes ?? '');
   }
 
   @override
@@ -400,10 +404,12 @@ class _ExerciseDialogState extends State<_ExerciseDialog> {
         name: _nameController.text,
         sets: int.parse(_setsController.text),
         reps: int.parse(_repsController.text),
-        restSeconds: _restController.text.isNotEmpty ? int.parse(_restController.text) : null,
+        restSeconds: _restController.text.isNotEmpty
+            ? int.parse(_restController.text)
+            : null,
         notes: _notesController.text.isNotEmpty ? _notesController.text : null,
       );
-      
+
       widget.onSave(exercise);
       Navigator.of(context).pop();
     }
@@ -412,7 +418,8 @@ class _ExerciseDialogState extends State<_ExerciseDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.exercise == null ? 'Adicionar Exercício' : 'Editar Exercício'),
+      title: Text(
+          widget.exercise == null ? 'Adicionar Exercício' : 'Editar Exercício'),
       content: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -486,7 +493,9 @@ class _ExerciseDialogState extends State<_ExerciseDialog> {
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
-                  if (value != null && value.isNotEmpty && int.tryParse(value) == null) {
+                  if (value != null &&
+                      value.isNotEmpty &&
+                      int.tryParse(value) == null) {
                     return 'Número inválido';
                   }
                   return null;

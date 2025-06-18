@@ -1,12 +1,12 @@
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NutritionService {
   // Usando USDA FoodData Central API (gratuita)
   static const String _baseUrl = 'https://api.nal.usda.gov/fdc/v1';
-  static const String _apiKey = 'jIuAqMBIELVyKM9pJIpaU6OFad02qhVnEpsNxykn'; // Para produção, use uma chave real
-  
+  static const String _apiKey =
+      'jIuAqMBIELVyKM9pJIpaU6OFad02qhVnEpsNxykn'; // Para produção, use uma chave real
+
   // Dados mock para quando a API não estiver disponível
   static final Map<String, Map<String, dynamic>> _mockFoodData = {
     'banana': {
@@ -108,15 +108,23 @@ class NutritionService {
         // Verifica se o campo 'foods' existe e é uma lista
         if (data['foods'] is List && (data['foods'] as List).isNotEmpty) {
           final foods = data['foods'] as List;
-          return foods.take(5).map((food) => {
-            'name': food['description'] ?? 'Alimento desconhecido',
-            'calories': _extractNutrient(food, 'Energy') ?? 0,
-            'protein': _extractNutrient(food, 'Protein') ?? 0,
-            'carbs': _extractNutrient(food, 'Carbohydrate, by difference') ?? 0,
-            'fat': _extractNutrient(food, 'Total lipid (fat)') ?? 0,
-            'fiber': _extractNutrient(food, 'Fiber, total dietary') ?? 0,
-            'sugar': _extractNutrient(food, 'Sugars, total including NLEA') ?? 0,
-          }).toList();
+          return foods
+              .take(5)
+              .map((food) => {
+                    'name': food['description'] ?? 'Alimento desconhecido',
+                    'calories': _extractNutrient(food, 'Energy') ?? 0,
+                    'protein': _extractNutrient(food, 'Protein') ?? 0,
+                    'carbs':
+                        _extractNutrient(food, 'Carbohydrate, by difference') ??
+                            0,
+                    'fat': _extractNutrient(food, 'Total lipid (fat)') ?? 0,
+                    'fiber':
+                        _extractNutrient(food, 'Fiber, total dietary') ?? 0,
+                    'sugar': _extractNutrient(
+                            food, 'Sugars, total including NLEA') ??
+                        0,
+                  })
+              .toList();
         } else {
           // Nenhum alimento encontrado na API
           print('Nenhum alimento encontrado na API para "$query"');
@@ -135,14 +143,14 @@ class NutritionService {
   List<Map<String, dynamic>> _searchMockData(String query) {
     final results = <Map<String, dynamic>>[];
     final queryLower = query.toLowerCase();
-    
+
     _mockFoodData.forEach((key, value) {
-      if (key.contains(queryLower) || 
+      if (key.contains(queryLower) ||
           value['name'].toString().toLowerCase().contains(queryLower)) {
         results.add(Map<String, dynamic>.from(value));
       }
     });
-    
+
     return results;
   }
 
@@ -150,9 +158,10 @@ class NutritionService {
     try {
       final nutrients = food['foodNutrients'] as List?;
       if (nutrients == null) return null;
-      
+
       for (final nutrient in nutrients) {
-        if (nutrient['nutrientName']?.toString().contains(nutrientName) == true) {
+        if (nutrient['nutrientName']?.toString().contains(nutrientName) ==
+            true) {
           return (nutrient['value'] as num?)?.toDouble();
         }
       }

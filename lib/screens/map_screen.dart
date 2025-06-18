@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -34,9 +33,9 @@ class _MapScreenState extends State<MapScreen> {
 
   void _updateMarkers() {
     _markers.clear();
-    
-    List<Place> filteredPlaces = _selectedFilter == 'todos' 
-        ? _places 
+
+    List<Place> filteredPlaces = _selectedFilter == 'todos'
+        ? _places
         : _places.where((place) => place.type == _selectedFilter).toList();
 
     for (Place place in filteredPlaces) {
@@ -53,7 +52,7 @@ class _MapScreenState extends State<MapScreen> {
         ),
       );
     }
-    
+
     setState(() {});
   }
 
@@ -64,7 +63,8 @@ class _MapScreenState extends State<MapScreen> {
       case 'parque':
         return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
       case 'trilha':
-        return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange);
+        return BitmapDescriptor.defaultMarkerWithHue(
+            BitmapDescriptor.hueOrange);
       default:
         return BitmapDescriptor.defaultMarker;
     }
@@ -155,26 +155,30 @@ class _MapScreenState extends State<MapScreen> {
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children: place.amenities.map((amenity) => Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _getTypeColor(place.type).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: _getTypeColor(place.type).withOpacity(0.3),
-                            ),
-                          ),
-                          child: Text(
-                            amenity,
-                            style: TextStyle(
-                              color: _getTypeColor(place.type),
-                              fontSize: 12,
-                            ),
-                          ),
-                        )).toList(),
+                        children: place.amenities
+                            .map((amenity) => Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 6,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: _getTypeColor(place.type)
+                                        .withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: _getTypeColor(place.type)
+                                          .withOpacity(0.3),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    amenity,
+                                    style: TextStyle(
+                                      color: _getTypeColor(place.type),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
                       ),
                       const SizedBox(height: 16),
                     ],
@@ -313,7 +317,8 @@ class _MapScreenState extends State<MapScreen> {
                   scrollDirection: Axis.horizontal,
                   children: [
                     _buildFilterChip('todos', 'Todos', Icons.map),
-                    _buildFilterChip('academia', 'Academias', Icons.fitness_center),
+                    _buildFilterChip(
+                        'academia', 'Academias', Icons.fitness_center),
                     _buildFilterChip('parque', 'Parques', Icons.park),
                     _buildFilterChip('trilha', 'Trilhas', Icons.hiking),
                   ],
@@ -331,7 +336,8 @@ class _MapScreenState extends State<MapScreen> {
                             locationProvider.currentPosition!.latitude,
                             locationProvider.currentPosition!.longitude,
                           )
-                        : const LatLng(-23.5505, -46.6333), // São Paulo como padrão
+                        : const LatLng(
+                            -23.5505, -46.6333), // São Paulo como padrão
                     zoom: 14,
                   ),
                   markers: _markers,

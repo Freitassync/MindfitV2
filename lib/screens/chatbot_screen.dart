@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_has_app/providers/user_provider.dart';
@@ -24,7 +23,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
   void initState() {
     super.initState();
     // Adiciona mensagem de boas-vindas
-    _addBotMessage("Olá! Sou seu assistente de saúde e fitness. Como posso ajudá-lo hoje?");
+    _addBotMessage(
+        "Olá! Sou seu assistente de saúde e fitness. Como posso ajudá-lo hoje?");
   }
 
   void _addBotMessage(String message) {
@@ -76,25 +76,41 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
 
   void _generateBotResponse(String userMessage) {
     String response = "Desculpe, não entendi sua pergunta. Pode reformular?";
-    
+
     final lowerMessage = userMessage.toLowerCase();
-    
+
     if (lowerMessage.contains('treino') || lowerMessage.contains('exercício')) {
-      response = "Ótima pergunta sobre treinos! Baseado no seu perfil, recomendo começar com exercícios de intensidade moderada. Que tipo de atividade você prefere: cardio, força ou flexibilidade?";
-    } else if (lowerMessage.contains('dieta') || lowerMessage.contains('alimentação') || lowerMessage.contains('comida')) {
-      response = "Para uma alimentação saudável, é importante manter o equilíbrio entre proteínas, carboidratos e gorduras boas. Considerando suas restrições alimentares, posso sugerir algumas opções específicas. O que você gostaria de saber?";
-    } else if (lowerMessage.contains('peso') || lowerMessage.contains('emagrecer') || lowerMessage.contains('perder')) {
-      response = "Para atingir seu objetivo de peso, é importante combinar exercícios regulares com uma alimentação balanceada. Baseado no seu perfil atual, você está no caminho certo! Quer dicas específicas?";
-    } else if (lowerMessage.contains('água') || lowerMessage.contains('hidratação')) {
-      response = "A hidratação é fundamental! Recomendo beber pelo menos 2-3 litros de água por dia, especialmente antes, durante e após os exercícios.";
-    } else if (lowerMessage.contains('sono') || lowerMessage.contains('dormir')) {
-      response = "O sono é crucial para a recuperação muscular e o bem-estar geral. Tente manter uma rotina de 7-9 horas de sono por noite para melhores resultados.";
-    } else if (lowerMessage.contains('motivação') || lowerMessage.contains('desânimo')) {
-      response = "Entendo que às vezes é difícil manter a motivação. Lembre-se dos seus objetivos e celebre cada pequena conquista. Você já fez muito progresso!";
-    } else if (lowerMessage.contains('olá') || lowerMessage.contains('oi') || lowerMessage.contains('bom dia')) {
-      response = "Olá! Como você está se sentindo hoje? Posso ajudá-lo com dicas de treino, alimentação ou qualquer dúvida sobre saúde e fitness.";
+      response =
+          "Ótima pergunta sobre treinos! Baseado no seu perfil, recomendo começar com exercícios de intensidade moderada. Que tipo de atividade você prefere: cardio, força ou flexibilidade?";
+    } else if (lowerMessage.contains('dieta') ||
+        lowerMessage.contains('alimentação') ||
+        lowerMessage.contains('comida')) {
+      response =
+          "Para uma alimentação saudável, é importante manter o equilíbrio entre proteínas, carboidratos e gorduras boas. Considerando suas restrições alimentares, posso sugerir algumas opções específicas. O que você gostaria de saber?";
+    } else if (lowerMessage.contains('peso') ||
+        lowerMessage.contains('emagrecer') ||
+        lowerMessage.contains('perder')) {
+      response =
+          "Para atingir seu objetivo de peso, é importante combinar exercícios regulares com uma alimentação balanceada. Baseado no seu perfil atual, você está no caminho certo! Quer dicas específicas?";
+    } else if (lowerMessage.contains('água') ||
+        lowerMessage.contains('hidratação')) {
+      response =
+          "A hidratação é fundamental! Recomendo beber pelo menos 2-3 litros de água por dia, especialmente antes, durante e após os exercícios.";
+    } else if (lowerMessage.contains('sono') ||
+        lowerMessage.contains('dormir')) {
+      response =
+          "O sono é crucial para a recuperação muscular e o bem-estar geral. Tente manter uma rotina de 7-9 horas de sono por noite para melhores resultados.";
+    } else if (lowerMessage.contains('motivação') ||
+        lowerMessage.contains('desânimo')) {
+      response =
+          "Entendo que às vezes é difícil manter a motivação. Lembre-se dos seus objetivos e celebre cada pequena conquista. Você já fez muito progresso!";
+    } else if (lowerMessage.contains('olá') ||
+        lowerMessage.contains('oi') ||
+        lowerMessage.contains('bom dia')) {
+      response =
+          "Olá! Como você está se sentindo hoje? Posso ajudá-lo com dicas de treino, alimentação ou qualquer dúvida sobre saúde e fitness.";
     }
-    
+
     _addBotMessage(response);
   }
 
@@ -107,9 +123,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const MainDashboardScreen())),
+              MaterialPageRoute(
+                  builder: (context) => const MainDashboardScreen())),
         ),
         title: Consumer<UserProvider>(
           builder: (context, userProvider, child) {
@@ -142,14 +157,17 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.green.shade50,
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                      border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(12)),
+                      border: Border(
+                          bottom: BorderSide(color: Colors.grey.shade200)),
                     ),
                     child: Row(
                       children: [
                         CircleAvatar(
                           backgroundColor: Colors.green,
-                          child: const Icon(Icons.smart_toy, color: Colors.white),
+                          child:
+                              const Icon(Icons.smart_toy, color: Colors.white),
                         ),
                         const SizedBox(width: 12),
                         const Expanded(
@@ -176,7 +194,7 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                       ],
                     ),
                   ),
-                  
+
                   // Mensagens
                   Expanded(
                     child: ListView.builder(
@@ -189,14 +207,16 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
                       },
                     ),
                   ),
-                  
+
                   // Campo de entrada
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: const BorderRadius.vertical(bottom: Radius.circular(12)),
-                      border: Border(top: BorderSide(color: Colors.grey.shade200)),
+                      borderRadius: const BorderRadius.vertical(
+                          bottom: Radius.circular(12)),
+                      border:
+                          Border(top: BorderSide(color: Colors.grey.shade200)),
                     ),
                     child: Row(
                       children: [
@@ -281,7 +301,8 @@ class _ChatbotScreenState extends State<ChatbotScreen> {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       child: Row(
-        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment:
+            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isUser) ...[

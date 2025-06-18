@@ -15,7 +15,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _goalWeightController = TextEditingController();
-  final TextEditingController _otherConditionsController = TextEditingController();
+  final TextEditingController _otherConditionsController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const LoginScreen()));
               },
             ),
             title: const Text(
@@ -113,7 +115,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 labelText: "Qual seu peso atual? (kg)",
                                 border: OutlineInputBorder(),
                               ),
-                              keyboardType: TextInputType.numberWithOptions(decimal: true),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Campo obrigatório';
@@ -128,7 +131,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 labelText: "Qual seu peso desejado? (kg)",
                                 border: OutlineInputBorder(),
                               ),
-                              keyboardType: TextInputType.numberWithOptions(decimal: true),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Campo obrigatório';
@@ -172,15 +176,19 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text("Perfil salvo com sucesso!")),
+                                      const SnackBar(
+                                          content: Text(
+                                              "Perfil salvo com sucesso!")),
                                     );
-                                    Navigator.of(context).pop(); // Volta para a tela anterior (Login)
+                                    Navigator.of(context)
+                                        .pop(); // Volta para a tela anterior (Login)
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF1B5E20),
                                   foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 12),
                                 ),
                                 child: const Text("Começar Minha Jornada"),
                               ),

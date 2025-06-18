@@ -1,4 +1,3 @@
-
 class Place {
   final String id;
   final String name;
@@ -76,7 +75,8 @@ class MockPlacesData {
         longitude: -46.6333,
         address: 'Av. Paulista, 1000 - Bela Vista, São Paulo',
         rating: 4.2,
-        description: 'Academia com equipamentos modernos e ambiente climatizado',
+        description:
+            'Academia com equipamentos modernos e ambiente climatizado',
         amenities: ['Musculação', 'Cardio', 'Aulas em grupo', 'Vestiário'],
         phoneNumber: '(11) 3000-0000',
       ),
@@ -101,10 +101,15 @@ class MockPlacesData {
         address: 'Av. Faria Lima, 2000 - Itaim Bibi, São Paulo',
         rating: 4.7,
         description: 'Rede de academias com tecnologia avançada',
-        amenities: ['Musculação', 'Crossfit', 'Aulas funcionais', 'Nutricionista'],
+        amenities: [
+          'Musculação',
+          'Crossfit',
+          'Aulas funcionais',
+          'Nutricionista'
+        ],
         phoneNumber: '(11) 3000-0002',
       ),
-      
+
       // Parques
       Place(
         id: '4',
@@ -114,7 +119,8 @@ class MockPlacesData {
         longitude: -46.6573,
         address: 'Av. Paulista, s/n - Vila Mariana, São Paulo',
         rating: 4.8,
-        description: 'Maior parque urbano de São Paulo, ideal para corrida e caminhada',
+        description:
+            'Maior parque urbano de São Paulo, ideal para corrida e caminhada',
         amenities: ['Pista de corrida', 'Ciclovia', 'Playground', 'Museus'],
       ),
       Place(
@@ -126,7 +132,12 @@ class MockPlacesData {
         address: 'Av. Prof. Fonseca Rodrigues, 2001 - Alto de Pinheiros',
         rating: 4.6,
         description: 'Parque com extensa área verde e atividades ao ar livre',
-        amenities: ['Pista de corrida', 'Quadras esportivas', 'Playground', 'Biblioteca'],
+        amenities: [
+          'Pista de corrida',
+          'Quadras esportivas',
+          'Playground',
+          'Biblioteca'
+        ],
       ),
       Place(
         id: '6',
@@ -139,7 +150,7 @@ class MockPlacesData {
         description: 'Grande parque na zona leste com diversas atividades',
         amenities: ['Trilhas', 'Lago', 'Quadras', 'Área de piquenique'],
       ),
-      
+
       // Trilhas
       Place(
         id: '7',
@@ -184,15 +195,18 @@ class MockPlacesData {
   static List<Place> getNearbyPlaces(double lat, double lon, double radiusKm) {
     // Simulação simples de proximidade
     return getMockPlaces().where((place) {
-      double distance = _calculateDistance(lat, lon, place.latitude, place.longitude);
+      double distance =
+          _calculateDistance(lat, lon, place.latitude, place.longitude);
       return distance <= radiusKm;
     }).toList();
   }
 
-  static double _calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  static double _calculateDistance(
+      double lat1, double lon1, double lat2, double lon2) {
     // Fórmula simplificada para demonstração
     double deltaLat = lat2 - lat1;
     double deltaLon = lon2 - lon1;
-    return (deltaLat * deltaLat + deltaLon * deltaLon) * 111; // Aproximação em km
+    return (deltaLat * deltaLat + deltaLon * deltaLon) *
+        111; // Aproximação em km
   }
 }

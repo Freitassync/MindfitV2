@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:smart_has_app/models/user.dart';
 import 'package:smart_has_app/services/user_service.dart';
@@ -20,7 +19,7 @@ class UserProvider with ChangeNotifier {
 
   Future<bool> updateCurrentUser(User user) async {
     try {
-      const mockUserId = "1"; 
+      const mockUserId = "1";
       final success = await _userService.updateUserData(mockUserId, user);
       if (success) {
         _currentUser = user;
@@ -49,7 +48,7 @@ class UserProvider with ChangeNotifier {
       return "Meta atingida!";
     }
   }
-  
+
   Color get weightDifferenceColor {
     final diff = weightDifference;
     if (diff > 0) {
@@ -60,5 +59,4 @@ class UserProvider with ChangeNotifier {
       return Colors.blue; // Meta atingida
     }
   }
-
 }

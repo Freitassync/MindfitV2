@@ -9,9 +9,9 @@ class NotificationProvider with ChangeNotifier {
 
   String? get fcmToken => _fcmToken;
   List<String> get notifications => _notifications;
-  
+
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   Future<void> initializeLocalNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -25,9 +25,10 @@ class NotificationProvider with ChangeNotifier {
     try {
       // Inicializar notificações locais primeiro
       await initializeLocalNotifications();
-      
+
       // Solicitar permissão para notificações
-      NotificationSettings settings = await _firebaseMessaging.requestPermission(
+      NotificationSettings settings =
+          await _firebaseMessaging.requestPermission(
         alert: true,
         announcement: false,
         badge: true,
@@ -39,15 +40,15 @@ class NotificationProvider with ChangeNotifier {
 
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         print('Usuário concedeu permissão para notificações');
-        
+
         // Obter token FCM
         _fcmToken = await _firebaseMessaging.getToken();
         print('FCM Token: $_fcmToken');
-        
+
         // Configurar handlers para mensagens
         FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
         FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageOpenedApp);
-        
+
         notifyListeners();
       } else {
         print('Usuário negou permissão para notificações');
@@ -58,12 +59,12 @@ class NotificationProvider with ChangeNotifier {
   }
 
   void _handleForegroundMessage(RemoteMessage message) async {
-    print('Mensagem recebida em primeiro plano: ${message.notification?.title}');
-    
+    print(
+        'Mensagem recebida em primeiro plano: ${message.notification?.title}');
+
     if (message.notification != null) {
-      _notifications.add(
-        '${message.notification!.title}: ${message.notification!.body}'
-      );
+      _notifications
+          .add('${message.notification!.title}: ${message.notification!.body}');
       notifyListeners();
 
       // Exibir notificação local
@@ -101,7 +102,7 @@ class NotificationProvider with ChangeNotifier {
   Future<void> sendLocalNotification(String title, String body) async {
     _notifications.add('$title: $body');
     notifyListeners();
-    
+
     // Exibir a notificação visual também
     await _showLocalNotification(title, body);
   }
@@ -114,22 +115,16 @@ class NotificationProvider with ChangeNotifier {
   // Simular diferentes tipos de notificações
   Future<void> simulateWorkoutReminder() async {
     await sendLocalNotification(
-      'Hora do Treino!', 
-      'Não esqueça do seu treino de hoje às 18:00'
-    );
+        'Hora do Treino!', 'Não esqueça do seu treino de hoje às 18:00');
   }
 
   Future<void> simulateWaterReminder() async {
     await sendLocalNotification(
-      'Meta de Água Atingida!', 
-      'Parabéns! Você bebeu 2L de água hoje 💧'
-    );
+        'Meta de Água Atingida!', 'Parabéns! Você bebeu 2L de água hoje 💧');
   }
 
   Future<void> simulateNutritionAlert() async {
-    await sendLocalNotification(
-      'Dica Nutricional', 
-      'Que tal adicionar mais proteínas na sua próxima refeição?'
-    );
+    await sendLocalNotification('Dica Nutricional',
+        'Que tal adicionar mais proteínas na sua próxima refeição?');
   }
 }

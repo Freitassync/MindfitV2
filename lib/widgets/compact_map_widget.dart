@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +26,7 @@ class _CompactMapWidgetState extends State<CompactMapWidget> {
     // Carrega apenas os 3 locais mais próximos para o widget compacto
     final allPlaces = MockPlacesData.getMockPlaces();
     _nearbyPlaces = allPlaces.take(3).toList();
-    
+
     _markers.clear();
     for (Place place in _nearbyPlaces) {
       _markers.add(
@@ -42,7 +41,7 @@ class _CompactMapWidgetState extends State<CompactMapWidget> {
         ),
       );
     }
-    
+
     if (mounted) setState(() {});
   }
 
@@ -53,7 +52,8 @@ class _CompactMapWidgetState extends State<CompactMapWidget> {
       case 'parque':
         return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
       case 'trilha':
-        return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange);
+        return BitmapDescriptor.defaultMarkerWithHue(
+            BitmapDescriptor.hueOrange);
       default:
         return BitmapDescriptor.defaultMarker;
     }
@@ -137,7 +137,8 @@ class _CompactMapWidgetState extends State<CompactMapWidget> {
                               locationProvider.currentPosition!.latitude,
                               locationProvider.currentPosition!.longitude,
                             )
-                          : const LatLng(-23.5505, -46.6333), // São Paulo como padrão
+                          : const LatLng(
+                              -23.5505, -46.6333), // São Paulo como padrão
                       zoom: 13,
                     ),
                     markers: _markers,
@@ -165,80 +166,83 @@ class _CompactMapWidgetState extends State<CompactMapWidget> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              children: _nearbyPlaces.map((place) => Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.shade200),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: _getTypeColor(place.type).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        _getTypeIcon(place.type),
-                        color: _getTypeColor(place.type),
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            place.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
+              children: _nearbyPlaces
+                  .map((place) => Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey.shade200),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color:
+                                    _getTypeColor(place.type).withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(
+                                _getTypeIcon(place.type),
+                                color: _getTypeColor(place.type),
+                                size: 20,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 14,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(
-                                place.rating.toString(),
-                                style: TextStyle(
-                                  color: Colors.grey.shade600,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  place.address,
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 12,
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    place.name,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                  const SizedBox(height: 2),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                        size: 14,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        place.rating.toString(),
+                                        style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          place.address,
+                                          style: TextStyle(
+                                            color: Colors.grey.shade600,
+                                            fontSize: 12,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
-                ),
-              )).toList(),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.grey.shade400,
+                              size: 16,
+                            ),
+                          ],
+                        ),
+                      ))
+                  .toList(),
             ),
           ),
         ],

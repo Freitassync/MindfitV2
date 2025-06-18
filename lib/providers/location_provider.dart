@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -82,12 +81,13 @@ class LocationProvider with ChangeNotifier {
 
   double calculateDistance(double lat, double lon) {
     if (_currentPosition == null) return 0.0;
-    
+
     return Geolocator.distanceBetween(
-      _currentPosition!.latitude,
-      _currentPosition!.longitude,
-      lat,
-      lon,
-    ) / 1000; // Converter para km
+          _currentPosition!.latitude,
+          _currentPosition!.longitude,
+          lat,
+          lon,
+        ) /
+        1000; // Converter para km
   }
 }
