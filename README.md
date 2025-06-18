@@ -1,8 +1,11 @@
-# Smart HAS App
+# Mindfit
 
-Smart HAS App é um aplicativo de saúde e fitness desenvolvido em Flutter, projetado para ajudar os usuários a monitorar seu progresso, planejar treinos, acompanhar a nutrição e receber assistência de um chatbot inteligente.
+![Logotipo do Mindfit](app/src/main/res/drawable/logo_mindfit.png)
 
-## Funcionalidades
+**Mindfit** é um aplicativo Android desenvolvido para promover saúde física, mental e bem-estar, alinhado à visão da Sociedade 5.0. Utilizando inteligência artificial e integração com dispositivos vestíveis, o Mindfit oferece uma experiência personalizada, com foco em atividade física, nutrição e equilíbrio emocional. Esta é a implementação inicial do projeto, desenvolvida como parte da Fase 3 do curso de Sistemas de Informação da FIAP.
+
+## Visão Geral
+O Mindfit visa preencher lacunas no mercado de saúde digital, oferecendo uma plataforma que combina dados fisiológicos, psicológicos e contextuais para criar recomendações personalizadas. Diferentemente de concorrentes como MyFitnessPal e Fitbit, o Mindfit destaca-se pela personalização avançada via inteligência artificial e um chatbot interativo que fornece suporte motivacional e técnico.
 
 - **Dashboard Principal:** Visualização rápida do progresso de peso, resumo diário de calorias, treinos e sequências.
 - **Planejador de Treinos:** Recomendações de treinos, desafios semanais e artigos sobre fitness.
